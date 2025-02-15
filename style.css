@@ -216,11 +216,28 @@
 .bs_cal2_calendar {
     display: flex;
     flex-wrap: nowrap;
+    position: relative;
     border: 1px solid #ccc;
-    padding: 5px;
+    padding: 5px 5px 5px 155px;
     width: 100%;
-    max-width: 720px;
+    max-width: 900px;
     overflow: hidden;
+}
+
+.bs_cal2_month-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    margin-right: 0px;
+}
+
+.bs_cal2_fixed-left {
+    position: absolute;
+    left: 0;
+    width: 150px;
+    background-color: lime;
+    height: 100%;
+    top: 0;
 }
 
 .bs_cal2_row {
@@ -243,13 +260,6 @@
     text-align: left;
     padding: 2px 5px;
     width: 100%;
-}
-
-.bs_cal2_month-container {
-    display: flex;
-    flex-direction: column;
-    padding: 0px;
-    margin-right: 0px;
 }
 
 .bs_cal2_weekday {
