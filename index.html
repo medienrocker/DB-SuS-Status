@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berufswunsch-Tabelle</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .status-box {
+            display: inline-block;
+            padding: 2px 6px;
+            border: 1px solid #333;
+            background-color: lightgreen;
+            border-radius: 3px;
+        }
+
+        .calendar {
+            width: 100%;
+            border: 1px solid #ddd;
+            padding: 5px;
+            text-align: center;
+            background-color: #fafafa;
+        }
+
+        .highlighted {
+            background-color: lightblue;
+            font-weight: bold;
+        }
+
+        .tooltip {
+            display: none;
+            position: absolute;
+            background: #333;
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+
+        .calendar-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .calendar-table th,
+        .calendar-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .marked-day {
+            background-color: lightblue;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Wunschberuf(e)</th>
+            <th>Status</th>
+            <th>Termine</th>
+            <!-- <th>Dokumente</th>
+            <th>Kontakt</th> -->
+            <th>Themen</th>
+            <!-- <th>Schulabschluss</th> -->
+        </tr>
+        <tr>
+            <td>Vor- und Nachname</td>
+            <td>
+                <strong>Berufsbezeichnung</strong><br>
+                Begründung: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi.
+            </td>
+            <td>
+                <div>Praktikum <span class="status-box">TZ</span></div>
+                <br>
+                <table class="calendar-table">
+                    <tr>
+                        <th>Mo</th>
+                        <th>Di</th>
+                        <th>Mi</th>
+                        <th>Do</th>
+                        <th>Fr</th>
+                        <th>Sa</th>
+                        <th>So</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td class="marked-day">1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>7</td>
+                        <td>8</td>
+                        <td class="marked-day">9</td>
+                        <td>10</td>
+                        <td>11</td>
+                        <td>12</td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <div class="calendar" id="calendar">Kalender</div>
+                <div class="tooltip" id="tooltip">Geplante Aktivitäten</div>
+            </td>
+            <!-- <td class="link-list">
+                <a href="#">📄 PDF-Dokument</a>
+                <a href="#">🖼️ Bild</a>
+            </td> -->
+            <!-- <td class="contact-info">
+                <div><i class="fas fa-phone"></i> +49 123 456789</div>
+                <div><i class="fas fa-envelope"></i> beispiel@email.de</div>
+                <div><i class="fas fa-home"></i> Musterstraße 2, 12345 Musterstadt</div>
+                <br>
+                <div><strong>Elternteil:</strong></div>
+                <div><i class="fas fa-phone"></i> +49 987 654321</div>
+                <div><i class="fas fa-envelope"></i> eltern@email.de</div>
+                <div><i class="fas fa-home"></i> Musterstraße 2, 12345 Musterstadt</div>
+            </td> -->
+            <td>
+                <ul class="checklist">
+                    <li>Erste Aufgabe erledigt</li>
+                    <li>Zweite Aufgabe ausstehend</li>
+                    <li>Dritte Aufgabe ausstehend</li>
+                </ul>
+            </td>
+            <!-- <td class="link-list">
+                <a href="#">📄 Abschlusszeugnis (PDF)</a>
+                <a href="#">🖼️ Abschlussfoto</a>
+            </td> -->
+        </tr>
+    </table>
+</body>
+
+</html>

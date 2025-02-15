@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<preset>
+
+<description/>
+
+<settings>
+<intro/>
+<comments>0</comments>
+<requiredentries>0</requiredentries>
+<requiredentriestoview>0</requiredentriestoview>
+<maxentries>0</maxentries>
+<rssarticles>0</rssarticles>
+<approval>0</approval>
+<manageapproved>1</manageapproved>
+<defaultsortdir>0</defaultsortdir>
+<defaultsort>0</defaultsort>
+</settings>
+
+<field>
+<type>picture</type>
+<name>Bild</name>
+<required>0</required>
+<param3>0</param3>
+</field>
+
+<field>
+<type>checkbox</type>
+<name>Checkboxen</name>
+<required>0</required>
+<param1>Option 1
+Option 2</param1>
+</field>
+
+<field>
+<type>file</type>
+<name>Datei</name>
+<required>0</required>
+<param3>0</param3>
+</field>
+
+<field>
+<type>date</type>
+<name>Datum</name>
+<required>0</required>
+</field>
+
+<field>
+<type>menu</type>
+<name>Dropdown</name>
+<required>0</required>
+<param1>Option 1
+Option 2</param1>
+</field>
+
+<field>
+<type>radiobutton</type>
+<name>Einfachauswahl</name>
+<required>0</required>
+<param1>Option 1
+Option 2</param1>
+</field>
+
+<field>
+<type>latlong</type>
+<name>Koordinaten</name>
+<required>0</required>
+<param2>-1</param2>
+</field>
+
+<field>
+<type>text</type>
+<name>Kurztext</name>
+<required>0</required>
+</field>
+
+<field>
+<type>multimenu</type>
+<name>Mehrfachauswahl</name>
+<required>0</required>
+<param1>Option 1
+Option 2
+Option 3</param1>
+</field>
+
+<field>
+<type>textarea</type>
+<name>Textbereich</name>
+<required>0</required>
+<param2>40</param2>
+<param3>10</param3>
+<param4>1</param4>
+<param5>0</param5>
+</field>
+
+<field>
+<type>url</type>
+<name>URL</name>
+<required>0</required>
+<param1>on</param1>
+<param3>on</param3>
+</field>
+
+<field>
+<type>number</type>
+<name>Zahl</name>
+<required>0</required>
+</field>
+
+</preset>

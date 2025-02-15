@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <title> Dynamischer Kalender </title>
+    <link rel="stylesheet" href="bs_calendar.css">
+</head>
+
+<body>
+    <div class="hidden">
+        <p class="bs_start-date">10. Februar 2025</p>
+        <p class="bs_end-date">21. Februar 2025</p>
+        <p class="bs_place">Firma XYZ</p>
+        <p class="bs_place-description">Beschreibung der Firma XYZ</p>
+    </div>
+
+    <div class="bs_calendar-wrapper">
+        <div class="bs_calendar">
+            <div class="bs_calendar-header">
+                <button id="bs_prev-month" type="button">&#x2039;</button>
+                <div id="bs_month-year"></div>
+                <button id="bs_next-month" type="button">&#x203A;</button>
+            </div>
+            <div class="bs_calendar-body">
+                <div class="bs_calendar-weekdays">
+                    <div>Mo</div>
+                    <div>Di</div>
+                    <div>Mi</div>
+                    <div>Do</div>
+                    <div>Fr</div>
+                    <div>Sa</div>
+                    <div>So</div>
+                </div>
+                <div class="bs_calendar-dates"></div>
+            </div>
+        </div>
+    </div>
+    <div id="bs_calendar-tooltip" class="bs_calendar-tooltip" style="display: none;"></div>
+    <script src="bs_calendar.js"></script>
+</body>
+
+</html>
