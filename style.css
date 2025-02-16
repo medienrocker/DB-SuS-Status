@@ -233,15 +233,41 @@
 
 .bs_cal2_fixed-left {
     position: absolute;
-    left: 0;
-    width: 150px;
-    background-color: lime;
-    height: 100%;
-    top: 0;
+    left: 5px;
+    width: 145px;
+    /* background-color: lime; */
+    height: calc(100% - 10px);
+    top: 5;
 }
 
 .bs_cal2_row {
     display: flex;
+}
+
+.bs_cal2_row-height {
+    height: 20px;
+}
+
+.bs_cal2_date-height {
+    height: 20px;
+}
+
+.bs_cal2_data-height {
+    height: 20px;
+    font-size: 10px;
+    /* background-color: var(--bs-section-bg); */
+    border-bottom: 1px solid var(--bs-month-bg);
+    padding-left: 5px;
+    padding-top: 2px;
+}
+
+.bs_cal2_month-height {
+    height: 30px;
+    padding: 2px 5px;
+    font-weight: bold;
+    background: #ddd;
+    text-align: left;
+    border: 1px solid transparent;
 }
 
 .bs_cal2_cell {
