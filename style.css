@@ -255,7 +255,6 @@
 .bs_cal2_data-height {
     height: 20px;
     font-size: 10px;
-    /* background-color: var(--bs-section-bg); */
     border-bottom: 1px solid var(--bs-month-bg);
     padding-left: 5px;
     padding-top: 2px;
