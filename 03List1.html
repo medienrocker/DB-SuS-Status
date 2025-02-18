@@ -14,14 +14,15 @@
         <div class="bs_cal2_calendar" id="calendar"></div>
         <button class="bs_cal2_arrow" id="next" type="button">&gt;</button>
     </div>
-    <div class="hidden">        
+    <div class="hidden">
         <div class="bs_user-dataset">
             <div class="bs_data-user"><span class="bs_userpicture"><a
                         href="https://lms.lernen.hamburg/user/view.php?id=110087&amp;course=217256"
                         class="d-inline-block aabtn"><img
                             src="https://lms.lernen.hamburg/pluginfile.php/1491881/user/icon/ocschool/f1?rev=23083068"
-                            class="userpicture" width="64" height="64" alt="Falk Szyba" title="Falk Szyba"></a></span> <span
-                    class="bs_username"><a href="https://lms.lernen.hamburg/user/view.php?id=110087&amp;course=217256">Falk
+                            class="userpicture" width="64" height="64" alt="Falk Szyba" title="Falk Szyba"></a></span>
+                <span class="bs_username"><a
+                        href="https://lms.lernen.hamburg/user/view.php?id=110087&amp;course=217256">Falk
                         Szyba</a></span> <span class="edit"><a
                         href="https://lms.lernen.hamburg/mod/data/edit.php?d=30471&amp;advanced=0&amp;paging&amp;page=0&amp;rid=408739&amp;sesskey=NMqbnqpwUA&amp;backto=https%253A%252F%252Flms.lernen.hamburg%252Fmod%252Fdata%252Fview.php%253Fd%253D30471%2526advanced%253D0%2526paging%2526page%253D0%2526rid%253D408739%2526mode%253Dsingle"
                         id="action_link67b45fb17e4b693" class="action-icon"><i
@@ -36,11 +37,15 @@
                     <p>th se</p>
                 </div>
             </div>
-        
-            <div class="bs_data-ranges">16. Februar 2025 - 22. Februar 2025 | 5. März 2025 - 30. März 2025 | 16. Februar 2025 -
-                16. Februar 2025 | 16. Februar 2025 - 16. Februar 2025 | 16. Februar 2025 - 16. Februar 2025 | 16. Februar 2025
-                - 16. Februar 2025 | 16. Februar 2025 - 16. Februar 2025 | 16. Februar 2025 - 16. Februar 2025 | 16. Februar
-                2025 - 16. Februar 2025 | 16. Februar 2025 - 16. Februar 2025 | 16. Februar 2025 - 16. Februar 2025 | 16.
+
+            <div class="bs_data-ranges">16. Februar 2025 - 22. Februar 2025 | 5. März 2025 - 30. März 2025 | 16. Februar
+                2025 -
+                16. Februar 2025 | 16. Februar 2025 - 16. Februar 2025 | 16. Februar 2025 - 16. Februar 2025 | 16.
+                Februar 2025
+                - 16. Februar 2025 | 16. Februar 2025 - 16. Februar 2025 | 16. Februar 2025 - 16. Februar 2025 | 16.
+                Februar
+                2025 - 16. Februar 2025 | 16. Februar 2025 - 16. Februar 2025 | 16. Februar 2025 - 16. Februar 2025 |
+                16.
                 Februar 2025 - 16. Februar 2025 | 16. Februar 2025 - 16. Februar 2025</div>
             <div class="bs_data-infos">
                 <span class="bs_beruf1">ggggg</span><span class="bs_kontakt1">
@@ -152,7 +157,7 @@
              * @returns {Date} - The corresponding Date object.
              */
             function parseGermanDate(dateStr) {
-            if (!dateStr) {
+                if (!dateStr) {
                     console.error("Invalid date string:", dateStr);
                     return new Date(); // Return current date as fallback
                 }
@@ -193,14 +198,19 @@
             function parseDateRange(text) {
                 return text.split('|').map(range => {
                     const [start, end] = range.trim().split(' - ');
-                    return [parseGermanDate(start), parseGermanDate(end)];
-                });
+                    if (start && end && start !== end) { // Ensure start and end are defined and not equal
+                        console.log("Parsing range:", start, end);
+                        return [parseGermanDate(start), parseGermanDate(end)];
+                    }
+                    return null; // Return null for dummy ranges or invalid ranges
+                }).filter(range => range !== null); // Filter out null values
             }
 
+
             /**
-             * Extracts user data from the HTML and returns an array of user objects.
-             * @returns {Array} - An array of user objects.
-             */
+            * Extracts user data from the HTML and returns an array of user objects.
+            * @returns {Array} - An array of user objects.
+            */
             function extractUserData() {
                 const userDatasets = Array.from(document.querySelectorAll(".bs_user-dataset"));
                 return userDatasets.map(dataset => {
@@ -213,13 +223,19 @@
                     const dataInfosHtml = dataset.querySelector(".bs_data-infos").innerHTML;
                     const dataInfos = extractDataInfos(dataInfosHtml);
 
+                    // Extract the edit and more spans
+                    const dataEdit = userElement.querySelector(".edit").outerHTML;
+                    const dataMore = userElement.querySelector(".more").outerHTML;
+
                     return {
                         userPicture,
                         userName,
                         userLink,
                         dreamJobs,
                         dataRanges,
-                        dataInfos
+                        dataInfos,
+                        dataEdit,
+                        dataMore
                     };
                 });
             }
@@ -373,12 +389,24 @@
                 fixedContainer.appendChild(rowHeight);
                 fixedContainer.appendChild(dateHeight);
 
-                // Append each user name.
-                userNames.forEach(userName => {
+                // Append each user name with a link.
+                userData.forEach(user => {
                     const userRow = document.createElement("div");
                     userRow.classList.add("bs_cal2_data-height");
-                    userRow.innerHTML = userName;
+
+                    const userLink = document.createElement("a");
+                    userLink.href = user.userLink;
+                    userLink.innerText = user.userName;
+                    userLink.classList.add("bs_username-link"); // Optional: Add a class for styling
+
+                    userRow.appendChild(userLink);
                     fixedContainer.appendChild(userRow);
+
+                    // Extract the edit span from the dataset
+                    //const editSpan = user.dataset.querySelector(".edit");
+                    // if (editSpan) {
+                    //     userRow.appendChild(editSpan.cloneNode(true)); // Clone the edit span and append it
+                    // }
                 });
 
                 calendar.appendChild(fixedContainer);
