@@ -235,7 +235,6 @@
     position: absolute;
     left: 5px;
     width: 145px;
-    /* background-color: lime; */
     height: calc(100% - 10px);
     top: 5;
 }
@@ -326,6 +325,23 @@
 
 .bs_cal2_offday {
     background-color: var(--bs-offday-bg);
+}
+
+.bs_cal2_data-height .edit i {
+    margin-left: 5px;
+    transition: all .3s ease;
+}
+
+.bs_cal2_data-height .edit i:hover {
+    transform: scale(2);
+}
+
+.bs_cal2_data-height .more i {
+    transition: all .3s ease;
+}
+
+.bs_cal2_data-height .more i:hover {
+    transform: scale(2);
 }
 
 

@@ -402,11 +402,21 @@
                     userRow.appendChild(userLink);
                     fixedContainer.appendChild(userRow);
 
-                    // Extract the edit span from the dataset
-                    //const editSpan = user.dataset.querySelector(".edit");
-                    // if (editSpan) {
-                    //     userRow.appendChild(editSpan.cloneNode(true)); // Clone the edit span and append it
-                    // }
+                    // Function to safely parse and append an HTML string as a real DOM element
+                    function appendHTMLString(htmlString, parentElement) {
+                        if (htmlString) {
+                            const tempDiv = document.createElement("div");
+                            tempDiv.innerHTML = htmlString.trim();
+                            const element = tempDiv.firstElementChild;
+                            if (element) {
+                                parentElement.appendChild(element);
+                            }
+                        }
+                    }
+
+                    // Append both `dataEdit` and `dataMore`
+                    appendHTMLString(user.dataEdit, userRow);
+                    appendHTMLString(user.dataMore, userRow);
                 });
 
                 calendar.appendChild(fixedContainer);
