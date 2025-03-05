@@ -1,0 +1,1 @@
+const schooldays = ["Mo", "Di", ]; // Schultage wählen
