@@ -47,6 +47,13 @@
                 2025 - 16. Februar 2025 | 16. Februar 2025 - 16. Februar 2025 | 16. Februar 2025 - 16. Februar 2025 |
                 16.
                 Februar 2025 - 16. Februar 2025 | 16. Februar 2025 - 16. Februar 2025</div>
+            <div class="bs_data-days">Mo<br>
+                Di<br>
+                Mi<br>
+                | Mo<br>
+                Di<br>
+                Mi<br>
+                | | | | | | | | | | | </div>
             <div class="bs_data-infos">
                 <span class="bs_beruf1">ggggg</span><span class="bs_kontakt1">
                     <div class="data-field-html">
@@ -110,6 +117,10 @@
             [[Anfang4]] - [[Ende4]] | [[Anfang5]] - [[Ende5]] | [[Anfang6]] - [[Ende6]] | [[Anfang7]] - [[Ende7]] |
             [[Anfang8]] - [[Ende8]] | [[Anfang9]] - [[Ende9]] | [[Anfang10]] - [[Ende10]] | [[Anfang11]] - [[Ende11]] |
             [[Anfang12]] - [[Ende12]] | [[Anfang13]] - [[Ende13]]</div>
+        <div class="bs_data-days">[[Praktikumstage1]] | [[Praktikumstage2]] | [[Praktikumstage3]] | [[Praktikumstage4]] |
+            [[Praktikumstage5]] | [[Praktikumstage6]] | [[Praktikumstage7]] |
+            [[Praktikumstage8]] | [[Praktikumstage9]] | [[Praktikumstage10]] | [[Praktikumstage11]] | [[Praktikumstage12]] |
+            [[Praktikumstage13]]</div>
         <div class="bs_data-infos">
             <span class="bs_beruf1">[[Beruf1]]</span><span class="bs_kontakt1">[[Kontakt1]]</span> |
             <span class="bs_beruf2">[[Beruf2]]</span><span class="bs_kontakt2">[[Kontakt2]]</span> |
@@ -127,8 +138,20 @@
         </div>
     </div>
     </div> -->
+    <script>
+        const schooldays = ["Mo", "Di", "Mi", "Do", "Fr"]; // Schultage wählen
+    </script>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var selectElement = document.getElementById("pref_perpage");
+            selectElement.value = "40";
+        });
+    </script>
+
+    <script>
+        /* ### CC-BY bildungssprit GbR | Falk Szyba @medienrocker ### */
+
         document.addEventListener('DOMContentLoaded', function () {
             initializeCalendar();
         });
@@ -222,6 +245,7 @@
                     const dataRanges = parseDateRange(dataset.querySelector(".bs_data-ranges").innerText);
                     const dataInfosHtml = dataset.querySelector(".bs_data-infos").innerHTML;
                     const dataInfos = extractDataInfos(dataInfosHtml);
+                    const dataDays = parseDataDays(dataset.querySelector(".bs_data-days").innerText);
 
                     // Extract the edit and more spans
                     const dataEdit = userElement.querySelector(".edit").outerHTML;
@@ -234,10 +258,17 @@
                         dreamJobs,
                         dataRanges,
                         dataInfos,
+                        dataDays,
                         dataEdit,
                         dataMore
                     };
                 });
+            }
+
+            function parseDataDays(text) {
+                return text.split('|').map(group =>
+                    group.trim().split(/\s+/).filter(day => day)
+                );
             }
 
             /**
@@ -430,9 +461,11 @@
              * @param {Array} userData - An array of user data objects.
              */
             function addDateCells(monthContainer, current, today, userData) {
+                let weekdayShort = current.toLocaleDateString("de-DE", { weekday: "short" }); // Get short weekday name
+
                 let weekdayCell = document.createElement("div");
                 weekdayCell.classList.add("bs_cal2_cell", "bs_cal2_weekday");
-                weekdayCell.innerText = current.toLocaleDateString("de-DE", { weekday: "short" });
+                weekdayCell.innerText = weekdayShort; // Set weekday name (Mo, Di, etc.)
 
                 let dateCell = document.createElement("div");
                 dateCell.classList.add("bs_cal2_cell", "bs_cal2_date");
@@ -456,6 +489,7 @@
                     monthContainer.children[2].appendChild(dateCell);
                 }
 
+                // Add data rows for users
                 userData.forEach((user, index) => {
                     let dataCell = document.createElement("div");
                     dataCell.classList.add("bs_cal2_cell");
@@ -464,25 +498,48 @@
                         dataCell.classList.add("bs_cal2_weekend");
                     }
 
+                    // Check if the day is a school day
+                    let shouldApplySchoolday = schooldays.includes(weekdayShort);
+
+                    // Check if this date falls within any of the user’s marked ranges
                     user.dataRanges.forEach(([rangeStart, rangeEnd], rangeIndex) => {
-                        // Adjust the end date by adding one day for comparison
                         let adjustedRangeEnd = new Date(rangeEnd);
                         adjustedRangeEnd.setDate(adjustedRangeEnd.getDate() + 1);
+                        let markedDays = user.dataDays[rangeIndex] || [];
 
                         if (current >= rangeStart && current < adjustedRangeEnd) {
-                            dataCell.classList.add(isWeekend ? "bs_cal2_range-weekend" : "bs_cal2_range");
                             const beruf = user.dataInfos[rangeIndex]?.beruf || "N/A";
                             const kontakt = user.dataInfos[rangeIndex]?.kontakt || "N/A";
+
+                            if (markedDays.includes(weekdayShort)) {
+                                dataCell.classList.add("bs_cal2_range"); // Apply green background only on marked days
+                                shouldApplySchoolday = false; // Prevent applying schoolday class
+                            } else {
+                                dataCell.classList.add("bs_cal2_range-muted"); // Optional: Different style for unmarked range days
+                            }
+
+                            // Ensure tooltip is set for all range days, whether marked or not
                             dataCell.title = `${user.userName} - Im Praktikum: ${rangeStart.toLocaleDateString("de-DE")} - ${rangeEnd.toLocaleDateString("de-DE")}\nWunschberuf(e): ${user.dreamJobs}\nals: ${beruf}\nKontakt zum Betrieb:\n${kontakt}`;
                             dataCell.dataset.userLink = user.userLink;
                         }
+
                     });
+
+                    // Apply schoolday class **only if it is still true**
+                    if (shouldApplySchoolday) {
+                        dataCell.innerText = "S"; // Fill cell with "S"
+                        dataCell.classList.add("bs_cal2_schoolday"); // Add the schoolday class
+                    }
+
+
 
                     if (monthContainer.children[3 + index]) {
                         monthContainer.children[3 + index].appendChild(dataCell);
                     }
                 });
             }
+
+
 
             // Generate the calendar for the initial date range.
             generateCalendar(startDate, endDate);
